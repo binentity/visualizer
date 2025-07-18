@@ -10,17 +10,12 @@ namespace Program {
 
         public Vector2f Velocity { get => velocity; set => velocity = value; }
         public CircleShape Shape { get => shape; set => shape = value; }
-        public Vector2f Position { get => shape.Position; set => shape.Position = value; }
-        public Color FillColor { get => shape.FillColor; set => shape.FillColor = value; }
 
-        public Entity(float radius) {
+        public Entity(float radius, Vector2f pos, Color fillColor) {
             shape = new CircleShape(radius);
             velocity = new Vector2f(0, 0);
-
-        }
-
-        public Vector2f EntityPosition() {
-            return Shape.Position;
+            shape.Position = pos;
+            shape.FillColor = fillColor;
         }
 
         public void Draw(RenderTarget target, RenderStates states) {

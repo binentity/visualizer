@@ -11,9 +11,9 @@ namespace Program {
         private RenderWindow window;
         private VideoMode videoMode;
 
-        private Entity entity;
-        private Entity entity1;
-        private Entity entity2;
+        private readonly Entity entity;
+        private readonly Entity entity1;
+        private readonly Entity entity2;
 
         private readonly List<Entity> entities;
 
@@ -25,19 +25,12 @@ namespace Program {
             window.Closed += WindowClosed;
             clock = new Clock();
 
-            entity = new Entity(20);
-            entity.Position = new Vector2f(100, 100);
-            entity.FillColor = Color.Red;
-
-            entity1 = new Entity(10);
-            entity1.Position = new Vector2f(0, 0);
-            entity1.FillColor = Color.Green;
-
-            entity2 = new Entity(50);
-            entity2.Position = new Vector2f(100, 0);
-            entity2.FillColor = Color.Yellow;
-
+            // уже лучше, но все равно нагромождение данных.
+            entity = new Entity(20, new Vector2f(100, 100), Color.Red);
+            entity1 = new Entity(10, new Vector2f(200, 20), Color.Green);
+            entity2 = new Entity(50, new Vector2f(100, 100), Color.Blue);
             entities = [entity, entity1, entity2];
+
             Run();
         }
 
@@ -48,13 +41,20 @@ namespace Program {
 
         private void Run() {
             while (window.IsOpen) {
-                window.DispatchEvents();
-
                 float delta = clock.Restart().AsSeconds();
+
+                ProcessEvents();
                 Update(delta);
                 Repaint();
 
                 window.Display();
+            }
+        }
+
+        private void ProcessEvents() {
+            window.DispatchEvents();
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Enter)) {
+                Console.WriteLine("hello Enter");
             }
         }
 
