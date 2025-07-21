@@ -11,11 +11,10 @@ namespace Program {
         private RenderWindow window;
         private VideoMode videoMode;
 
-        private readonly Entity entity;
-        private readonly Entity entity1;
-        private readonly Entity entity2;
+        private Entity entity1;
+        private Entity entity2;
 
-        private readonly List<Entity> entities;
+        private List<Entity> entities;
 
         private readonly Clock clock;
 
@@ -25,13 +24,14 @@ namespace Program {
             window.Closed += WindowClosed;
             clock = new Clock();
 
-            // уже лучше, но все равно нагромождение данных.
-            entity = new Entity(20, new Vector2f(100, 100), Color.Red);
-            entity1 = new Entity(10, new Vector2f(200, 20), Color.Green);
-            entity2 = new Entity(50, new Vector2f(100, 100), Color.Blue);
-            entities = [entity, entity1, entity2];
-
+            InitEntities();
             Run();
+        }
+
+        private void InitEntities() {
+            entity1 = new Entity(10f, new Vector2f(200f, 500f), 10f, new Vector2f(2, 2), Color.Green);
+            entity2 = new Entity(50f, new Vector2f(500f, 500f), 500f, new Vector2f(0, 0), Color.Blue);
+            entities = [entity1, entity2];
         }
 
         private void WindowClosed(object? sender, EventArgs e) {
@@ -45,8 +45,6 @@ namespace Program {
 
                 ProcessEvents();
                 Update(delta);
-                Repaint();
-
                 window.Display();
             }
         }
@@ -68,9 +66,17 @@ namespace Program {
 
         private void Update(float delta) {
             foreach (var e in entities) {
-                e.Update(delta);
-            }
-        }
+                foreach (var se in entities) {
+                    if (se.Equals(e)) {
+                        continue;
+                    }
 
+                    e.Update(delta, se);
+                }
+
+                Repaint();
+            }
+
+        }
     }
 }
