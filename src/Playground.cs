@@ -12,6 +12,7 @@ namespace Program {
         private VideoMode videoMode;
 
         private Entity entity1;
+        private Entity entity3;
         private Entity entity2;
 
         private List<Entity> entities;
@@ -29,9 +30,10 @@ namespace Program {
         }
 
         private void InitEntities() {
-            entity1 = new Entity(10f, new Vector2f(200f, 500f), 10f, new Vector2f(2, 2), Color.Green);
-            entity2 = new Entity(50f, new Vector2f(500f, 500f), 500f, new Vector2f(0, 0), Color.Blue);
-            entities = [entity1, entity2];
+            entity1 = new Entity(10f, new Vector2f(500f, 500f), 5f, new Vector2f(50, 100), Color.Green);
+            entity3 = new Entity(5f, new Vector2f(1000f, 500f), 5f, new Vector2f(30, 30), Color.Yellow);
+            entity2 = new Entity(30f, new Vector2f(800f, 500f), 3000f, new Vector2f(0, 0), Color.Blue);
+            entities = [entity1, entity2, entity3];
         }
 
         private void WindowClosed(object? sender, EventArgs e) {
@@ -67,7 +69,7 @@ namespace Program {
         private void Update(float delta) {
             foreach (var e in entities) {
                 foreach (var se in entities) {
-                    if (se.Equals(e)) {
+                    if (e.Equals(se)) {
                         continue;
                     }
 

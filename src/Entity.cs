@@ -33,18 +33,19 @@ namespace Program {
         }
 
         public void Update(float delta, Entity entity) {
-            //shape.Position += speed * delta;
 
-            speed = new Vector2f((float)(speed.X + (0.00005 * entity.mass / DistanceTo(entity) * DistanceTo(entity)) *
-                                        (entity.shape.Position.X - shape.Position.X) / DistanceTo(entity)),
-
-                    (float)(speed.Y + (0.00005 * entity.mass / DistanceTo(entity) * DistanceTo(entity)) *
-                           (entity.shape.Position.Y - shape.Position.Y) / DistanceTo(entity)));       // * time.asSeconds());
+            //TODO: Сделать читвбельным это дерьмо. 
+            speed = new Vector2f(speed.X + 0.0005f * entity.mass /
+                    DistanceTo(entity) * DistanceTo(entity) *
+                    (entity.shape.Position.X - shape.Position.X) / DistanceTo(entity),
+                    speed.Y + 0.0005f * entity.mass /
+                    DistanceTo(entity) * DistanceTo(entity) *
+                    (entity.shape.Position.Y - shape.Position.Y) / DistanceTo(entity));
 
             Console.WriteLine(speed.ToString());
 
-            shape.Position = new Vector2f(shape.Position.X + speed.X, shape.Position.Y + speed.Y);
-            //circle.setPosition(position);
+            shape.Position = new Vector2f(shape.Position.X + speed.X * delta,
+                                            shape.Position.Y + speed.Y * delta);
         }
 
     }
