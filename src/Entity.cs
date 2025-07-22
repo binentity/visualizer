@@ -7,7 +7,7 @@ namespace Program {
 
         private CircleShape shape;
         private Vector2f speed;
-        private float mass;
+        private readonly float mass;
 
         public CircleShape Shape { get => shape; set => shape = value; }
 
@@ -42,10 +42,12 @@ namespace Program {
                     DistanceTo(entity) * DistanceTo(entity) *
                     (entity.shape.Position.Y - shape.Position.Y) / DistanceTo(entity));
 
-            Console.WriteLine(speed.ToString());
+            //Console.WriteLine(speed.ToString());
 
             shape.Position = new Vector2f(shape.Position.X + speed.X * delta,
                                             shape.Position.Y + speed.Y * delta);
+
+
         }
 
     }

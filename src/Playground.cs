@@ -15,6 +15,9 @@ namespace Program {
         private Entity entity3;
         private Entity entity2;
 
+        private Font font;
+        private Text text;
+
         private List<Entity> entities;
 
         private readonly Clock clock;
@@ -24,6 +27,11 @@ namespace Program {
             window = new RenderWindow(videoMode, TITLE);
             window.Closed += WindowClosed;
             clock = new Clock();
+
+            font = new Font("C:\\mono.ttf");
+            text = new Text("hello", font, 24) {
+                Position = new Vector2f(50, 50),
+            };
 
             InitEntities();
             Run();
@@ -54,13 +62,15 @@ namespace Program {
         private void ProcessEvents() {
             window.DispatchEvents();
             if (Keyboard.IsKeyPressed(Keyboard.Key.Enter)) {
-                Console.WriteLine("hello Enter");
+                window.Close();
             }
         }
 
         private void Repaint() {
             Color clearColor = new(150, 150, 150);
             window.Clear(clearColor);
+            window.Draw(text);
+
             foreach (var e in entities) {
                 window.Draw(e);
             }
@@ -76,6 +86,7 @@ namespace Program {
                     e.Update(delta, se);
                 }
 
+                text.DisplayedString = entity3.Shape.Position.ToString();
                 Repaint();
             }
 
