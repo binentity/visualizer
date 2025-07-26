@@ -8,17 +8,14 @@ namespace Program {
 
         private const string TITLE = "Playground window";
 
-        private RenderWindow window;
+        private readonly RenderWindow window;
         private VideoMode videoMode;
-
-        private Entity entity1;
-        private Entity entity3;
-        private Entity entity2;
 
         private Font font;
         private Text text;
 
         private List<Entity> entities;
+        private List<LineShape> lineShapes;
 
         private readonly Clock clock;
 
@@ -28,20 +25,35 @@ namespace Program {
             window.Closed += WindowClosed;
             clock = new Clock();
 
-            font = new Font("C:\\mono.ttf");
-            text = new Text("hello", font, 24) {
-                Position = new Vector2f(50, 50),
-            };
-
             InitEntities();
             Run();
         }
 
         private void InitEntities() {
-            entity1 = new Entity(10f, new Vector2f(500f, 500f), 5f, new Vector2f(50, 100), Color.Green);
-            entity3 = new Entity(5f, new Vector2f(1000f, 500f), 5f, new Vector2f(30, 30), Color.Yellow);
-            entity2 = new Entity(30f, new Vector2f(800f, 500f), 3000f, new Vector2f(0, 0), Color.Blue);
-            entities = [entity1, entity2, entity3];
+            font = new Font("C:/mono.ttf");
+            text = new Text("", font, 24) {
+                Position = new Vector2f(50, 50),
+            };
+
+            // Сделать рандомайзер для создания сущностей.
+            entities = [
+                new Entity(10f, new Vector2f(500f, 500f), 5f, new Vector2f(50, 100), Color.Green),
+                new Entity(10f, new Vector2f(800f, 500f), 25f, new Vector2f(150, 50), Color.Blue),
+                new Entity(10f, new Vector2f(1200f, 1000f), 25f, new Vector2f(300, 100), Color.Yellow),
+
+                new Entity(30f, new Vector2f(1000f, 800f), 5000f, new Vector2f(0, 0), Color.Blue),
+            ];
+
+            lineShapes = [
+                new LineShape(
+                    new Vector2f(15, 15),
+                    new Vector2f(100, 100)
+                ),
+                new LineShape(
+                    new Vector2f(50, 100),
+                    new Vector2f(500, 500)
+                ),
+            ];
         }
 
         private void WindowClosed(object? sender, EventArgs e) {
@@ -67,12 +79,15 @@ namespace Program {
         }
 
         private void Repaint() {
-            Color clearColor = new(150, 150, 150);
-            window.Clear(clearColor);
+            window.Clear(new Color(150, 150, 150));
             window.Draw(text);
 
             foreach (var e in entities) {
                 window.Draw(e);
+            }
+
+            foreach (var line in lineShapes) {
+                window.Draw(line);
             }
         }
 
@@ -86,7 +101,7 @@ namespace Program {
                     e.Update(delta, se);
                 }
 
-                text.DisplayedString = entity3.Shape.Position.ToString();
+                text.DisplayedString = "hello world";
                 Repaint();
             }
 
