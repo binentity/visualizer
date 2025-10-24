@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 
-namespace Program {
+namespace SolarSystem {
 
     internal class Entity : Drawable {
 
@@ -32,9 +32,10 @@ namespace Program {
             return distance;
         }
 
+        // Make a PhysicsComponent
         public void Update(float delta, Entity entity) {
 
-            //TODO: Сделать читвбельным это дерьмо. 
+            //TODO: Make this shit a writable.
             speed = new Vector2f(speed.X + 0.0005f * entity.mass /
                     DistanceTo(entity) * DistanceTo(entity) *
                     (entity.shape.Position.X - shape.Position.X) / DistanceTo(entity),

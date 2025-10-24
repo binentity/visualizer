@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 
-namespace Program {
+namespace SolarSystem {
     internal class LineShape : Drawable {
 
         private readonly Vertex[] vertices;

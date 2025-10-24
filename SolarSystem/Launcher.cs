@@ -2,24 +2,26 @@
 using SFML.System;
 using SFML.Window;
 
-namespace Program {
+namespace SolarSystem {
 
-    internal class Playground {
+    internal class Launcher {
 
         private const string TITLE = "Playground window";
+        private const string PATH_TO_FONT = "C:/mono.ttf";
 
         private readonly RenderWindow window;
         private VideoMode videoMode;
 
         private Font font;
         private Text text;
+        // Добавить игрока
 
         private List<Entity> entities;
         private List<LineShape> lineShapes;
 
         private readonly Clock clock;
 
-        public Playground() {
+        public Launcher() {
             videoMode = new VideoMode(2550, 1440);
             window = new RenderWindow(videoMode, TITLE);
             window.Closed += WindowClosed;
@@ -30,20 +32,24 @@ namespace Program {
         }
 
         private void InitEntities() {
-            font = new Font("C:/mono.ttf");
+
+            font = new Font(PATH_TO_FONT);
             text = new Text("", font, 24) {
                 Position = new Vector2f(50, 50),
             };
 
             // Сделать рандомайзер для создания сущностей.
             entities = [
+                // Planets. Сделать сущности абстракным.
                 new Entity(10f, new Vector2f(500f, 500f), 5f, new Vector2f(50, 100), Color.Green),
                 new Entity(10f, new Vector2f(800f, 500f), 25f, new Vector2f(150, 50), Color.Blue),
                 new Entity(10f, new Vector2f(1200f, 1000f), 25f, new Vector2f(300, 100), Color.Yellow),
 
+                // Sun
                 new Entity(30f, new Vector2f(1000f, 800f), 5000f, new Vector2f(0, 0), Color.Blue),
             ];
 
+            // Убрать и инитить уже в SunEntity
             lineShapes = [
                 new LineShape(
                     new Vector2f(15, 15),
@@ -54,6 +60,7 @@ namespace Program {
                     new Vector2f(500, 500)
                 ),
             ];
+
         }
 
         private void WindowClosed(object? sender, EventArgs e) {
@@ -67,6 +74,7 @@ namespace Program {
 
                 ProcessEvents();
                 Update(delta);
+                Repaint();
                 window.Display();
             }
         }
@@ -97,12 +105,12 @@ namespace Program {
                     if (e.Equals(se)) {
                         continue;
                     }
-
                     e.Update(delta, se);
                 }
 
+
+
                 text.DisplayedString = "hello world";
-                Repaint();
             }
 
         }
